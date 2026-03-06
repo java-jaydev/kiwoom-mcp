@@ -61,7 +61,7 @@ server.tool(
 // 투자자별 매매동향
 server.tool(
   "get_investor_trend",
-  "투자자별 매매동향 조회 (외국인/기관/개인 순매수)",
+  "투자자별 매매동향 조회 (외국인/기관/개인 순매수, 상위 100종목. 종목코드 입력 시 해당 종목 필터)",
   investorTrendSchema.shape,
   async ({ stockCode }) => ({
     content: [{ type: "text", text: JSON.stringify(await getInvestorTrend(config, { stockCode }), null, 2) }],

@@ -1,4 +1,4 @@
-import { KiwoomConfig } from "../types.js";
+import { KiwoomConfig, formatNumber } from "../types.js";
 import { callApi } from "../client.js";
 
 interface HoldingItem {
@@ -22,20 +22,20 @@ export async function getAccountBalance(config: KiwoomConfig) {
   const holdings = ((data.stk_acnt_evlt_prst as HoldingItem[] | undefined) ?? []).map((item) => ({
     종목코드: item.stk_cd,
     종목명: item.stk_nm,
-    보유수량: item.rmnd_qty,
-    평균단가: item.avg_prc,
-    현재가: item.cur_prc,
-    평가금액: item.evlt_amt,
-    손익금액: item.pl_amt,
+    보유수량: formatNumber(item.rmnd_qty),
+    평균단가: formatNumber(item.avg_prc),
+    현재가: formatNumber(item.cur_prc),
+    평가금액: formatNumber(item.evlt_amt),
+    손익금액: formatNumber(item.pl_amt),
     손익률: item.pl_rt,
-    매입금액: item.pur_amt,
+    매입금액: formatNumber(item.pur_amt),
   }));
 
   return {
-    예수금: data.entr as string,
-    주식평가금액: data.stk_evlt_amt as string,
-    총매입금액: data.tot_pur_amt as string,
-    총자산: data.aset_evlt_amt as string,
+    예수금: formatNumber(data.entr as string),
+    주식평가금액: formatNumber(data.stk_evlt_amt as string),
+    총매입금액: formatNumber(data.tot_pur_amt as string),
+    총자산: formatNumber(data.aset_evlt_amt as string),
     보유종목: holdings,
   };
 }
