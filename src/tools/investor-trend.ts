@@ -27,6 +27,7 @@ export async function getInvestorTrend(
   const data = await callApi(config, "ka10066", "/api/dostk/mrkcond", {
     stk_cd: input.stockCode,
     mrkt_tp: "KRX",
+    amt_qty_tp: "1",
   });
 
   const items = (data.output as TrendItem[] | undefined) ?? [];
